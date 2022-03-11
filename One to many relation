@@ -1,0 +1,30 @@
+
+ one-to-many relationship between Category and Product (one category has many products)
+
+In Java (and OO generally) you'd expect the Category class to contain a list of Products, so the Category can be said to 'own' products.
+
+In SQL it's the other way round - you'd expect Product table to hold a foreign key reference to a Category. 
+
+Looks like your using JPA, so you could have something like this:
+
+Category class:
+
+@Entity
+public class Category {
+
+  //other stuff...
+
+  @OneToMany(cascade=CascadeType.ALL, mappedBy="category")
+  private Set<Product> products;
+
+}
+Product class:
+
+@Entity
+public class Product {
+
+  //other stuff...
+
+  @ManyToOne
+  private Category category;
+}
